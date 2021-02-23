@@ -45,6 +45,7 @@ module Codebreaker
     end
 
     def take_a_hint
+      @hints_used += 1
       @hints.pop
     end
 
