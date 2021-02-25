@@ -1,7 +1,6 @@
 module Codebreaker
   class Game
-    attr_reader :hints_total, :attempts_total, :hints
-    attr_accessor :have_hints, :attempts_left, :secret_code, :hints_used
+    attr_reader :hints_total, :attempts_total, :hints, :have_hints, :attempts_left, :secret_code, :hints_used
 
     DIFFICULTIES = {
       easy: { attempts: 15, hints: 2 },
@@ -10,6 +9,8 @@ module Codebreaker
     }.freeze
     RANGE_OF_DIGITS = (1..6).freeze
     AMOUNT_DIGITS = 4
+    GUESSED_SYMBOL = '+'.freeze
+    NOT_GUESSED_SYMBOL = '-'.freeze
 
     def initialize(difficulty = :easy)
       @secret_code = generate_code
@@ -35,11 +36,11 @@ module Codebreaker
 
     def handle_numbers
       uncatched_numbers = check_numbers_for_correct_position
-      @round_result = '+' * uncatched_numbers.select(&:nil?).size
+      @round_result = GUESSED_SYMBOL * uncatched_numbers.select(&:nil?).size
       @user_code.compact.map do |number|
         next unless uncatched_numbers.compact.include?(number)
 
-        @round_result += '-'
+        @round_result += NOT_GUESSED_SYMBOL
         uncatched_numbers[uncatched_numbers.index(number)] = nil
       end
     end
@@ -58,7 +59,6 @@ module Codebreaker
     def assign_difficulty(difficulty)
       @attempts_total = DIFFICULTIES.dig(difficulty, :attempts)
       @hints_total = DIFFICULTIES.dig(difficulty, :hints)
-      @have_hints = @hints_total
       @attempts_left = @attempts_total
     end
 

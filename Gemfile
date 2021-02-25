@@ -8,3 +8,4 @@ gem 'pry'
 gem 'rake', '~> 13.0'
 gem 'rspec'
 gem 'rubocop'
+gem 'simplecov', require: false, group: :test
