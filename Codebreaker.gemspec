@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'Codebreaker gem'
   spec.description   = 'Codebreaker gem'
-  spec.homepage      = 'https://github.com/KarpovskyiD/CodebreakerGem'
+  spec.homepage      = 'https://github.com/KarpovskyiD/Codebreaker_Gem'
   spec.license       = 'MIT'
   spec.required_ruby_version = Gem::Requirement.new('>= 2.7.1')
 
