@@ -1,6 +1,6 @@
 module Codebreaker
   class Game
-    attr_reader :hints_total, :attempts_total, :hints, :have_hints, :attempts_left, :secret_code, :hints_used
+    attr_reader :hints_total, :attempts_total, :hints, :attempts_left, :secret_code, :hints_used
 
     DIFFICULTIES = {
       easy: { attempts: 15, hints: 2 },
@@ -53,7 +53,7 @@ module Codebreaker
     private
 
     def generate_code
-      (1..AMOUNT_DIGITS).map { rand(RANGE_OF_DIGITS) }
+      Array.new(AMOUNT_DIGITS) { rand(RANGE_OF_DIGITS) }
     end
 
     def assign_difficulty(difficulty)
