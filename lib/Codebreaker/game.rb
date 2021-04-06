@@ -1,6 +1,6 @@
 module Codebreaker
   class Game
-    attr_reader :hints_total, :attempts_total, :hints, :attempts_left, :secret_code, :hints_used
+    attr_reader :hints_total, :attempts_total, :attempts_left, :secret_code, :hints_left
 
     DIFFICULTIES = {
       easy: { attempts: 15, hints: 2 },
@@ -8,19 +8,19 @@ module Codebreaker
       hard: { attempts: 5, hints: 1 }
     }.freeze
     RANGE_OF_DIGITS = (1..6).freeze
-    AMOUNT_DIGITS = 4
+    AMOUNT_CODE_DIGITS = 4
     GUESSED_SYMBOL = '+'.freeze
     NOT_GUESSED_SYMBOL = '-'.freeze
 
     def initialize(difficulty = :easy)
       @secret_code = generate_code
-      assign_difficulty(difficulty)
-      @hints = secret_code.uniq.shuffle.take(@hints_total)
-      @hints_used = 0
+      @attempts_total = DIFFICULTIES.dig(difficulty, :attempts)
+      @hints_total = @hints_left = DIFFICULTIES.dig(difficulty, :hints)
+      @attempts_left = @attempts_total
     end
 
     def guess(user_value)
-      @user_code = user_value.each_char.map(&:to_i)
+      @user_code = user_value.chars.map(&:to_i)
       handle_numbers
       @attempts_left -= 1
       @round_result.empty? ? 'No matches' : @round_result
@@ -45,21 +45,20 @@ module Codebreaker
       end
     end
 
+    def hints
+      @hints ||= secret_code.uniq.shuffle.take(@hints_total)
+    end
+
     def take_a_hint
-      @hints_used += 1
+      hints
+      @hints_left -= 1
       @hints.pop
     end
 
     private
 
     def generate_code
-      Array.new(AMOUNT_DIGITS) { rand(RANGE_OF_DIGITS) }
-    end
-
-    def assign_difficulty(difficulty)
-      @attempts_total = DIFFICULTIES.dig(difficulty, :attempts)
-      @hints_total = DIFFICULTIES.dig(difficulty, :hints)
-      @attempts_left = @attempts_total
+      Array.new(AMOUNT_CODE_DIGITS) { rand(RANGE_OF_DIGITS) }
     end
 
     def check_numbers_for_correct_position
