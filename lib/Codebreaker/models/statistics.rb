@@ -1,3 +1,5 @@
+require 'preloader'
+
 module Codebreaker
   class Statistics
     def statistics

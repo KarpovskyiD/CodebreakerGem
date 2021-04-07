@@ -1,3 +1,5 @@
+require 'preloader'
+
 module Codebreaker
   class Player < ValidatedObject
     attr_reader :name, :errors

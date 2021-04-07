@@ -1,3 +1,5 @@
+require 'preloader'
+
 module Codebreaker
   class Game < ValidatedObject
     attr_reader :hints_total, :attempts_total, :attempts_left, :secret_code, :hints_left
