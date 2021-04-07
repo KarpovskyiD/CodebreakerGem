@@ -12,7 +12,7 @@ module Codebreaker
     def validate
       return if hint?
 
-      @errors << failing.secret_code_length unless valid_user_answer?
+      @errors << I18n.t('errors.wrong_user_answer') unless valid_user_answer?
     end
 
     def hint?

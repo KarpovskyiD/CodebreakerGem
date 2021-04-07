@@ -1,6 +1,7 @@
+require 'pry'
 module Codebreaker
   class Difficulty < ValidatedObject
-    attr_reader :name, :errors
+    attr_reader :name, :errors, :difficulty
 
     DIFFICULTIES = {
       easy: { difficulty: 'easy', attempts: 15, hints: 2 },
@@ -14,13 +15,13 @@ module Codebreaker
     end
 
     def validate
-      @errors << I18n.t('errors.wrong_difficulty') if difficulty_exist?
+      @errors << I18n.t('errors.wrong_difficulty') if difficulty_nil?
     end
 
     private
 
-    def difficulty_exist?
-      Codebreaker::Game::DIFFICULTIES.key? @difficulty
+    def difficulty_nil?
+      @difficulty.nil?
     end
   end
 end

@@ -1,3 +1,4 @@
+require 'pry'
 module Codebreaker
   class Player < ValidatedObject
     attr_reader :name, :errors
@@ -10,7 +11,7 @@ module Codebreaker
     end
 
     def validate
-      @errors << I18n.t('errors.wrong_name') if check_length?
+      @errors << I18n.t('errors.wrong_name') unless check_length?
     end
 
     private

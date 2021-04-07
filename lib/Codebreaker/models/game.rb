@@ -7,12 +7,12 @@ module Codebreaker
     GUESSED_SYMBOL = '+'.freeze
     NOT_GUESSED_SYMBOL = '-'.freeze
 
-    def initialize(difficulty = :easy)
+    def initialize(level)
       super()
       @secret_code = generate_code
-      @attempts_total = DIFFICULTIES.dig(difficulty, :attempts)
-      @hints_total = @hints_left = DIFFICULTIES.dig(difficulty, :hints)
-      @attempts_left = @attempts_total
+      puts @secret_code
+      @attempts_total = @attempts_left = level.difficulty[:attempts]
+      @hints_total = @hints_left = level.difficulty[:hints]
       @active_game = true
     end
 
@@ -50,6 +50,14 @@ module Codebreaker
 
     def lose?
       @attempts_left.zero?
+    end
+
+    def hints_used 
+      @hints_total - @hints_left
+    end
+
+    def attempts_used
+      @attempts_total - @attempts_left + 1
     end
 
     private
