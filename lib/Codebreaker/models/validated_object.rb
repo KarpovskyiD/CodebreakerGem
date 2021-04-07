@@ -1,5 +1,3 @@
-require 'preloader'
-
 module Codebreaker
   class ValidatedObject
     def initialize

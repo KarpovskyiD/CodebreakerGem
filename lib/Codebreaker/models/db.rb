@@ -1,5 +1,3 @@
-require 'preloader'
-
 module Codebreaker
   class DB
     FOLDER_PATH = './'.freeze

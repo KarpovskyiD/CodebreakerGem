@@ -1,5 +1,3 @@
-require 'preloader'
-
 module Codebreaker
   class Guess < ValidatedObject
     attr_reader :guess_code, :errors

@@ -12,5 +12,4 @@ require 'Codebreaker'
 # Pry.start
 
 require 'irb'
-require 'preloader'
 IRB.start(__FILE__)

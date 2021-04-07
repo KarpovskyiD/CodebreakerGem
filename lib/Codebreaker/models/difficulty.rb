@@ -1,5 +1,3 @@
-require 'preloader'
-
 module Codebreaker
   class Difficulty < ValidatedObject
     attr_reader :name, :errors
