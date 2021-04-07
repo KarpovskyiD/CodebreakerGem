@@ -1,6 +1,4 @@
-# frozen_string_literal: true
-
-require 'Codebreaker'  
+# frozen_string_literal: true 
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

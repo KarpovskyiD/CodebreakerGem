@@ -1,0 +1,4 @@
+en:
+  errors:
+    wrong_difficulty: Difficulty is wrong
+    wrong_name: Name is wrong. Check the name length. Min length- 3, max length - 20.

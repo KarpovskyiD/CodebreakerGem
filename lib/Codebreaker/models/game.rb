@@ -1,22 +1,19 @@
 module Codebreaker
-  class Game
+  class Game < ValidatedObject
     attr_reader :hints_total, :attempts_total, :attempts_left, :secret_code, :hints_left
 
-    DIFFICULTIES = {
-      easy: { attempts: 15, hints: 2 },
-      medium: { attempts: 10, hints: 1 },
-      hard: { attempts: 5, hints: 1 }
-    }.freeze
     RANGE_OF_DIGITS = (1..6).freeze
-    AMOUNT_CODE_DIGITS = 4
+    SECRET_CODE_LENGTH = 4
     GUESSED_SYMBOL = '+'.freeze
     NOT_GUESSED_SYMBOL = '-'.freeze
 
     def initialize(difficulty = :easy)
+      super()
       @secret_code = generate_code
       @attempts_total = DIFFICULTIES.dig(difficulty, :attempts)
       @hints_total = @hints_left = DIFFICULTIES.dig(difficulty, :hints)
       @attempts_left = @attempts_total
+      @active_game = true
     end
 
     def guess(user_value)
@@ -24,14 +21,6 @@ module Codebreaker
       handle_numbers
       @attempts_left -= 1
       @round_result.empty? ? 'No matches' : @round_result
-    end
-
-    def exact_match?(guess)
-      @secret_code.join == guess
-    end
-
-    def valid_answer?(user_answer)
-      user_answer =~ /^[1-6]{4}$/
     end
 
     def handle_numbers
@@ -55,10 +44,18 @@ module Codebreaker
       @hints.pop
     end
 
+    def win?(guess)
+      @secret_code.join == guess
+    end
+
+    def lose?
+      @attempts_left.zero?
+    end
+
     private
 
     def generate_code
-      Array.new(AMOUNT_CODE_DIGITS) { rand(RANGE_OF_DIGITS) }
+      Array.new(SECRET_CODE_LENGTH) { rand(RANGE_OF_DIGITS) }
     end
 
     def check_numbers_for_correct_position
