@@ -1,4 +1,5 @@
 module Codebreaker
+  DB_NAME = 'statistics'.freeze
   class DB
     FOLDER_PATH = './'.freeze
 
@@ -14,7 +15,7 @@ module Codebreaker
       def save_score(data)
         current_file_path = file_path(:statistics)
         File.new(current_file_path, 'w+') unless File.exist?(current_file_path)
-        record = load_file('statistics') || []
+        record = load_file(DB_NAME) || []
         File.write(current_file_path, (record << data).to_yaml)
       end
     end

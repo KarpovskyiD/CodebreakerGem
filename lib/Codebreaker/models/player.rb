@@ -1,9 +1,8 @@
-require 'pry'
 module Codebreaker
   class Player < ValidatedObject
     attr_reader :name, :errors
 
-    RANGE__OF_NAME_LENGTH = (3..20).freeze
+    RANGE_OF_NAME_LENGTH = (3..20).freeze
 
     def initialize(name)
       super()
@@ -17,7 +16,7 @@ module Codebreaker
     private
 
     def check_length?
-      RANGE__OF_NAME_LENGTH.include?(@name.length)
+      RANGE_OF_NAME_LENGTH.include?(@name.length)
     end
   end
 end

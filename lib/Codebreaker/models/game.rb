@@ -20,7 +20,7 @@ module Codebreaker
       @user_code = user_value.chars.map(&:to_i)
       handle_numbers
       @attempts_left -= 1
-      @round_result.empty? ? 'No matches' : @round_result
+      @round_result.empty? ? I18n.t('no_matches') : @round_result
     end
 
     def handle_numbers
@@ -34,12 +34,12 @@ module Codebreaker
       end
     end
 
-    def hints
+    def assign_hints
       @hints ||= secret_code.uniq.shuffle.take(@hints_total)
     end
 
     def take_a_hint
-      hints
+      assign_hints
       @hints_left -= 1
       @hints.pop
     end
@@ -52,7 +52,7 @@ module Codebreaker
       @attempts_left.zero?
     end
 
-    def hints_used 
+    def hints_used
       @hints_total - @hints_left
     end
 

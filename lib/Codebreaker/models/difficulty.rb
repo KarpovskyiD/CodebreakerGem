@@ -1,4 +1,3 @@
-require 'pry'
 module Codebreaker
   class Difficulty < ValidatedObject
     attr_reader :name, :errors, :difficulty
