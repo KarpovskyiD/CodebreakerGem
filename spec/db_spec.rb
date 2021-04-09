@@ -1,4 +1,3 @@
-require 'pry'
 RSpec.describe Codebreaker::DB do
   subject(:db) { Codebreaker::DB }
   let(:player) {Codebreaker::Player.new('Name')}

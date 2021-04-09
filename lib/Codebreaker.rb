@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require './lib/preloader'
+require_relative 'preloader'
 
 module Codebreaker
 end
