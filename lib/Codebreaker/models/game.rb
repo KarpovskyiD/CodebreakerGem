@@ -10,7 +10,6 @@ module Codebreaker
     def initialize(difficulty)
       super()
       @secret_code = generate_code
-      puts @secret_code
       @attempts_total = @attempts_left = difficulty.level[:attempts]
       @hints_total = @hints_left = difficulty.level[:hints]
       @active_game = true
