@@ -8,10 +8,13 @@ GEM
   specs:
     ast (2.4.2)
     colorize (0.8.1)
+    concurrent-ruby (1.1.8)
     diff-lcs (1.4.4)
     fasterer (0.9.0)
       colorize (~> 0.7)
       ruby_parser (>= 3.14.1)
+    i18n (1.8.9)
+      concurrent-ruby (~> 1.0)
     parallel (1.20.1)
     parser (3.0.0.0)
       ast (~> 2.4.1)
@@ -55,6 +58,7 @@ PLATFORMS
 DEPENDENCIES
   Codebreaker!
   fasterer
+  i18n
   rspec
   rubocop
 
