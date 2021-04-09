@@ -1,4 +1,6 @@
 # frozen_string_literal: true 
+require './lib/preloader'
+require 'yaml'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

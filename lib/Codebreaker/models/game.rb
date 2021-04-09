@@ -1,3 +1,4 @@
+require 'pry'
 module Codebreaker
   class Game < ValidatedObject
     attr_reader :hints_total, :attempts_total, :attempts_left, :secret_code, :hints_left
@@ -7,12 +8,12 @@ module Codebreaker
     GUESSED_SYMBOL = '+'.freeze
     NOT_GUESSED_SYMBOL = '-'.freeze
 
-    def initialize(level)
+    def initialize(difficulty)
       super()
       @secret_code = generate_code
       puts @secret_code
-      @attempts_total = @attempts_left = level.difficulty[:attempts]
-      @hints_total = @hints_left = level.difficulty[:hints]
+      @attempts_total = @attempts_left = difficulty.level[:attempts]
+      @hints_total = @hints_left = difficulty.level[:hints]
       @active_game = true
     end
 

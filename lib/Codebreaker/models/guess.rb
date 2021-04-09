@@ -1,6 +1,6 @@
 module Codebreaker
   class Guess < ValidatedObject
-    attr_reader :guess_code, :errors
+    attr_reader :user_answer, :errors
 
     def initialize(user_answer)
       super()

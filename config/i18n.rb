@@ -1,2 +1,2 @@
 require 'i18n'
-I18n.load_path << Dir["#{File.expand_path('db')}/en.yml"]
+I18n.load_path << Dir["#{File.expand_path('locales')}/en.yml"]

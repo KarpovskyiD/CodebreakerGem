@@ -1,16 +1,16 @@
 module Codebreaker
   class Difficulty < ValidatedObject
-    attr_reader :name, :errors, :difficulty
+    attr_reader :name, :errors, :level
 
     DIFFICULTIES = {
-      easy: { difficulty: 'easy', attempts: 15, hints: 2 },
-      medium: { difficulty: 'medium', attempts: 10, hints: 1 },
-      hard: { difficulty: 'hard', attempts: 5, hints: 1 }
+      easy: { name: 'easy', attempts: 15, hints: 2 },
+      medium: { name: 'medium', attempts: 10, hints: 1 },
+      hard: { name: 'hard', attempts: 5, hints: 1 }
     }.freeze
 
-    def initialize(difficulty)
+    def initialize(level)
       super()
-      @difficulty = DIFFICULTIES[difficulty.to_sym]
+      @level = DIFFICULTIES[level.to_sym]
     end
 
     def validate
@@ -20,7 +20,7 @@ module Codebreaker
     private
 
     def difficulty_nil?
-      @difficulty.nil?
+      @level.nil?
     end
   end
 end

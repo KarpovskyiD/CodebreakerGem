@@ -1,8 +1,7 @@
 module Codebreaker
-  DB_NAME = 'statistics'.freeze
   class DB
     FOLDER_PATH = './'.freeze
-
+    DB_NAME = 'statistics'.freeze
     class << self
       def load_file(filename)
         YAML.load_file(file_path(filename)) if File.exist?(file_path(filename))

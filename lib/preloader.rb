@@ -2,4 +2,11 @@ require 'yaml'
 require 'i18n'
 require './config/i18n'
 
-Dir[File.join(__dir__, 'lib/Codebreaker/**/*.rb')].sort.each { |file| require file }
+require './lib/Codebreaker/models/validated_object'
+require './lib/Codebreaker/models/db'
+require './lib/Codebreaker/models/difficulty'
+require './lib/Codebreaker/models/game'
+require './lib/Codebreaker/models/guess'
+require './lib/Codebreaker/models/player'
+require './lib/Codebreaker/models/statistics'
+require './lib/Codebreaker/version'
