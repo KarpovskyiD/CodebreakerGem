@@ -1,6 +1,6 @@
 module Codebreaker
-  class Game < ValidatedObject
-    attr_reader :hints_total, :attempts_total, :attempts_left, :secret_code, :hints_left
+  class Game
+    attr_reader :hints_total, :attempts_total, :attempts_left, :hints_left
 
     RANGE_OF_DIGITS = (1..6).freeze
     SECRET_CODE_LENGTH = 4
@@ -9,42 +9,47 @@ module Codebreaker
 
     def initialize(difficulty)
       super()
-      @secret_code = generate_code
       @attempts_total = @attempts_left = difficulty.level[:attempts]
       @hints_total = @hints_left = difficulty.level[:hints]
-      @active_game = true
     end
 
     def guess(user_value)
       @user_code = user_value.chars.map(&:to_i)
-      handle_numbers
+      handle_user_code
       @attempts_left -= 1
-      @round_result.empty? ? I18n.t('no_matches') : @round_result
+      @round_result.empty? ? nil : @round_result
     end
 
-    def handle_numbers
-      uncatched_numbers = check_numbers_for_correct_position
-      @round_result = GUESSED_SYMBOL * uncatched_numbers.select(&:nil?).size
+    def handle_user_code
+      numbers_with_incorrect_position = check_numbers_for_correct_position
+      @round_result = GUESSED_SYMBOL * numbers_with_incorrect_position.select(&:nil?).size
       @user_code.compact.map do |number|
-        next unless uncatched_numbers.compact.include?(number)
+        next unless numbers_with_incorrect_position.compact.include?(number)
 
         @round_result += NOT_GUESSED_SYMBOL
-        uncatched_numbers[uncatched_numbers.index(number)] = nil
+        numbers_with_incorrect_position[numbers_with_incorrect_position.index(number)] = nil
       end
     end
 
-    def assign_hints
+    def hints
       @hints ||= secret_code.uniq.shuffle.take(@hints_total)
     end
 
+    def secret_code
+      @secret_code ||= generate_code
+    end
+
+    def active_game
+      @active_game ||= true
+    end
+
     def take_a_hint
-      assign_hints
       @hints_left -= 1
-      @hints.pop
+      hints.pop
     end
 
     def win?(guess)
-      @secret_code.join == guess
+      secret_code.join == guess
     end
 
     def lose?

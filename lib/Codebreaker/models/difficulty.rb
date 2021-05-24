@@ -1,5 +1,5 @@
 module Codebreaker
-  class Difficulty < ValidatedObject
+  class Difficulty < ValidatableObject
     attr_reader :name, :errors, :level
 
     DIFFICULTIES = {

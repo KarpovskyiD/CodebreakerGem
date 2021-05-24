@@ -1,15 +1,15 @@
 module Codebreaker
   class Statistics
-    GAME_LEVELS = %w[hard medium easy].freeze
+    def statistics_for_output
+      sort_st_records(statistics)
+      create_new_st_record(statistics)
+    end
 
     def statistics
       @statistics ||= Codebreaker::DB.load_file('statistics')
     end
 
-    def statistics_for_output
-      sort_st_records(statistics)
-      create_new_st_record(statistics)
-    end
+    private
 
     def create_new_st_record(statistics)
       statistics.map do |record|
@@ -19,8 +19,12 @@ module Codebreaker
     end
 
     def sort_st_records(statistics)
+      game_levels = Difficulty::DIFFICULTIES.map do |_key, value|
+        value[:name]
+      end
+
       statistics.sort_by! do |record|
-        [GAME_LEVELS.index(record[:difficulty]), record[:attempts_used], record[:hints_used]]
+        [game_levels.index(record[:difficulty]), record[:attempts_used], record[:hints_used]]
       end
     end
   end

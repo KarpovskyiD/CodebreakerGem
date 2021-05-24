@@ -1,5 +1,5 @@
 module Codebreaker
-  class Player < ValidatedObject
+  class Player < ValidatableObject
     attr_reader :name, :errors
 
     RANGE_OF_NAME_LENGTH = (3..20).freeze

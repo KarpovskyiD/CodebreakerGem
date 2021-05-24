@@ -5,6 +5,7 @@ RSpec.describe Codebreaker::Game do
   let(:medium_level) { Codebreaker::Difficulty.new('medium') }
   let(:hard_game) { described_class.new(hard_level) }
   let(:hard_level) { Codebreaker::Difficulty.new('hard') }
+  let(:difficulties) { Codebreaker::Difficulty::DIFFICULTIES }
 
   context 'Checking different values initialization if new game was created' do
     context 'Checking secret_code initialization' do
@@ -20,44 +21,42 @@ RSpec.describe Codebreaker::Game do
     end
 
     context 'Checking functionality of hints assigning according to level' do
-      it 'level assigned - easy' do
-        expect(game.assign_hints.size).to eq(Codebreaker::Difficulty::DIFFICULTIES.dig(:easy, :hints))
+
+      it 'level assigned -  easy' do
+        expect(game.hints.size).to eq(difficulties[:easy][:hints])
       end
 
       it 'level assigned - medium' do
-        expect(medium_game.assign_hints.size).to eq(Codebreaker::Difficulty::DIFFICULTIES.dig(:medium, :hints))
+        expect(medium_game.hints.size).to eq(difficulties[:medium][:hints])
       end
 
       it 'level assigned - hard' do
-        expect(hard_game.assign_hints.size).to eq(Codebreaker::Difficulty::DIFFICULTIES.dig(:hard, :hints))
+        expect(hard_game.hints.size).to eq(difficulties[:hard][:hints])
       end
     end
 
     context 'Checking functionality of attempts assigning according to level' do
       it 'level assigned easy' do
-        expect(game.attempts_total).to eq(Codebreaker::Difficulty::DIFFICULTIES.dig(:easy,
-                                                                                                      :attempts))
+        expect(game.attempts_total).to eq(difficulties[:easy][:attempts])
       end
 
       it 'level assigned medium' do
-        expect(medium_game.attempts_total).to eq(Codebreaker::Difficulty::DIFFICULTIES.dig(:medium,
-                                                                                                        :attempts))
+        expect(medium_game.attempts_total).to eq(difficulties[:medium][:attempts])
       end
 
       it 'level assigned hard' do
-        expect(hard_game.attempts_total).to eq(Codebreaker::Difficulty::DIFFICULTIES.dig(:hard,
-                                                                                                      :attempts))
+        expect(hard_game.attempts_total).to eq(difficulties[:hard][:attempts])
       end
     end
 
     context 'Checking the functionality of hints using' do
       it 'The last digit is selected from hints array when hints method is executed' do
-        hint = game.assign_hints.last
+        hint = game.hints.last
         expect(game.take_a_hint).to eq(hint)
       end
 
       it 'Size of hints array is changed by -1 when hint method is used' do
-        expect { game.take_a_hint }.to change { game.assign_hints.size }.by(-1)
+        expect { game.take_a_hint }.to change { game.hints.size }.by(-1)
       end
     end
 
@@ -65,79 +64,79 @@ RSpec.describe Codebreaker::Game do
       it '+' do
         subject.instance_variable_set(:@user_code, [6, 6, 6, 6])
         subject.instance_variable_set(:@secret_code, [6, 5, 4, 3])
-        expect { subject.send(:handle_numbers) }.to change { subject.instance_variable_get(:@round_result) }.to('+')
+        expect { subject.send(:handle_user_code) }.to change { subject.instance_variable_get(:@round_result) }.to('+')
       end
 
       it '++' do
         subject.instance_variable_set(:@user_code, [1, 6, 6, 1])
         subject.instance_variable_set(:@secret_code, [6, 6, 6, 6])
-        expect { subject.send(:handle_numbers) }.to change { subject.instance_variable_get(:@round_result) }.to('++')
+        expect { subject.send(:handle_user_code) }.to change { subject.instance_variable_get(:@round_result) }.to('++')
       end
 
       it '+++' do
         subject.instance_variable_set(:@user_code, [6, 5, 4, 4])
         subject.instance_variable_set(:@secret_code, [6, 5, 4, 3])
-        expect { subject.send(:handle_numbers) }.to change { subject.instance_variable_get(:@round_result) }.to('+++')
+        expect { subject.send(:handle_user_code) }.to change { subject.instance_variable_get(:@round_result) }.to('+++')
       end
 
       it '++++' do
         subject.instance_variable_set(:@user_code, [6, 6, 6, 6])
         subject.instance_variable_set(:@secret_code, [6, 6, 6, 6])
-        expect { subject.send(:handle_numbers) }.to change { subject.instance_variable_get(:@round_result) }.to('++++')
+        expect { subject.send(:handle_user_code) }.to change { subject.instance_variable_get(:@round_result) }.to('++++')
       end
 
       it 'empty result' do
         subject.instance_variable_set(:@user_code, [6, 6, 6, 6])
         subject.instance_variable_set(:@secret_code, [1, 5, 4, 3])
-        expect { subject.send(:handle_numbers) }.to change { subject.instance_variable_get(:@round_result) }.to('')
+        expect { subject.send(:handle_user_code) }.to change { subject.instance_variable_get(:@round_result) }.to('')
       end
 
       it '-' do
         subject.instance_variable_set(:@user_code, [2, 6, 6, 6])
         subject.instance_variable_set(:@secret_code, [6, 5, 4, 3])
-        expect { subject.send(:handle_numbers) }.to change { subject.instance_variable_get(:@round_result) }.to('-')
+        expect { subject.send(:handle_user_code) }.to change { subject.instance_variable_get(:@round_result) }.to('-')
       end
 
       it '--' do
         subject.instance_variable_set(:@user_code, [3, 2, 2, 6])
         subject.instance_variable_set(:@secret_code, [6, 5, 4, 3])
-        expect { subject.send(:handle_numbers) }.to change { subject.instance_variable_get(:@round_result) }.to('--')
+        expect { subject.send(:handle_user_code) }.to change { subject.instance_variable_get(:@round_result) }.to('--')
       end
 
       it '---' do
         subject.instance_variable_set(:@user_code, [2, 6, 3, 4])
         subject.instance_variable_set(:@secret_code, [6, 5, 4, 3])
-        expect { subject.send(:handle_numbers) }.to change { subject.instance_variable_get(:@round_result) }.to('---')
+        expect { subject.send(:handle_user_code) }.to change { subject.instance_variable_get(:@round_result) }.to('---')
       end
 
       it '----' do
         subject.instance_variable_set(:@user_code, [4, 3, 5, 6])
         subject.instance_variable_set(:@secret_code, [6, 5, 4, 3])
-        expect { subject.send(:handle_numbers) }.to change { subject.instance_variable_get(:@round_result) }.to('----')
+        expect { subject.send(:handle_user_code) }.to change { subject.instance_variable_get(:@round_result) }.to('----')
       end
 
       it '++--' do
         subject.instance_variable_set(:@user_code, [5, 6, 4, 3])
         subject.instance_variable_set(:@secret_code, [6, 5, 4, 3])
-        expect { subject.send(:handle_numbers) }.to change { subject.instance_variable_get(:@round_result) }.to('++--')
+        expect { subject.send(:handle_user_code) }.to change { subject.instance_variable_get(:@round_result) }.to('++--')
       end
 
       it '+-' do
         subject.instance_variable_set(:@user_code, [6, 4, 1, 1])
         subject.instance_variable_set(:@secret_code, [6, 5, 4, 3])
-        expect { subject.send(:handle_numbers) }.to change { subject.instance_variable_get(:@round_result) }.to('+-')
+        expect { subject.send(:handle_user_code) }.to change { subject.instance_variable_get(:@round_result) }.to('+-')
       end
 
       it '+---' do
         subject.instance_variable_set(:@user_code, [1, 4, 2, 3])
         subject.instance_variable_set(:@secret_code, [1, 2, 3, 4])
-        expect { subject.send(:handle_numbers) }.to change { subject.instance_variable_get(:@round_result) }.to('+---')
+        expect { subject.send(:handle_user_code) }.to change { subject.instance_variable_get(:@round_result) }.to('+---')
       end
 
       it '++-' do
         subject.instance_variable_set(:@user_code, [1, 5, 2, 4])
         subject.instance_variable_set(:@secret_code, [1, 2, 3, 4])
-        expect { subject.send(:handle_numbers) }.to change { subject.instance_variable_get(:@round_result) }.to('++-')
+        expect { subject.send(:handle_user_code) }.to change { subject.instance_variable_get(:@round_result) }.to('++-')
       end
     end
 

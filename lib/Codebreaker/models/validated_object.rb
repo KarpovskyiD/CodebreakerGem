@@ -1,5 +1,5 @@
 module Codebreaker
-  class ValidatedObject
+  class ValidatableObject
     def initialize
       @errors = []
     end

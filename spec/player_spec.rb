@@ -1,6 +1,6 @@
 RSpec.describe Codebreaker::Player do
   subject(:player) { described_class.new(valid_name) }
-  let(:valid_name) { 'Username'}
+  let(:valid_name) { 'Username' }
 
   describe 'Creating new instance of Player' do
     let(:empty_array) { [] }
@@ -11,9 +11,7 @@ RSpec.describe Codebreaker::Player do
 
   describe 'invalid player name' do
     let(:invalid_name) { '1' }
-    let(:errors_array) do
-      [I18n.t('errors.wrong_name')]
-    end
+    let(:errors_array) {  [I18n.t('errors.wrong_name')] }
 
     before do
       player.instance_variable_set(:@name, invalid_name)
@@ -40,4 +38,4 @@ RSpec.describe Codebreaker::Player do
       expect(player.valid?).to eq(true)
     end
   end
-end     
+end
